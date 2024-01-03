@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <time.h>
+#include <stdlib.h>
+int main(){
+srand( time(NULL));
+int valeurD= rand()%6+1;
+int jetonsJoueur=100;
+int miseJoueur;
+int regle; //pour la question connaissance des regles
+int compris; // si le joueur a compris les regles
+int valeurTotalCarteJ=0;// valeur carte joueur
+int valeurTotalCarteC=0; // valeur carte croupier
+int choixDeFinir=1; // si le joueur veut arreter de tirer des carte
+int NouvellePartie=1; // si il veut refaire une partie
+int choixDeRecharge;// si la personne veut ou non recharger son compte
+int nombreParties = 0;
+
+printf("Bonjour, bienvenue a la table. Connaissez-vous les regles ?\n Si oui, tapez 1. Si non, tapez 0.\n");
+scanf("%d",&regle);
+if (regle==0)
+{
+printf ("Le but est d'avoir le chiffre le plus eleve de la partie sans jamais depasser 21.\n Si vous gagnez, vous remportez votre mise. Si vous perdez, vous perdez votre mise.\n");
+
+printf("Avez-vous compris?\nSi oui, tapez 1. Sinon, tapez 0.");
+scanf("%d",&compris);
+
+if (compris ==1)
+{
+    printf("Vous avez %d jetons.\nCombien voulez-vous miser ?",jetonsJoueur);
+}
+    else
+    {
+        printf ("Regardez des vidéos et revenez quand vous aurez compris les regles.\n");
+         return 0;
+
+   }
+}
+
+
+while(NouvellePartie==1){
+    valeurTotalCarteJ=0;
+    valeurTotalCarteC=0;
+    choixDeFinir=1;
+    miseJoueur=0;
+    nombreParties++;
+    if(nombreParties==1){
+    printf( "c'est votre %d er partie\n",nombreParties);}
+    else {printf( "c'est votre %d eme parties\n",nombreParties);}
+        if(jetonsJoueur==0){
+        printf("voulez-vous recharger votre compte? si oui tapez 1 si non tapez 0.\n");
+        scanf("%d",&choixDeRecharge);
+        if(choixDeRecharge==0){
+         printf("vous n'avez plus d'argent Bonne soiree a vous.\n");
+         return 0;}
+        else{printf("combien voulez-vous mettre?");
+            scanf("%d",&jetonsJoueur);
+            printf("nous confirmons votre recharge.\n");
+         }}
+
+while ( miseJoueur>jetonsJoueur||miseJoueur<=0){
+  printf("Il faut que votre mise soit comprise entre 1 et %d jetons\n",jetonsJoueur);
+    printf("Du coup, vous voulez miser combien de jetons?\n");
+   scanf("%d",&miseJoueur);
+}
+
+
+printf("Votre mise est de %d jetons.\n", miseJoueur);
+
+printf("Parfait, nous allons commencer.\n");
+
+
+while (choixDeFinir==1&&valeurTotalCarteJ<=21)
+    {
+  int valeurD= rand()%6+1;
+    valeurTotalCarteJ=valeurTotalCarteJ+valeurD;
+    printf("Vous avez      -----\n              |     |\n              |     |\n              |  %d  |\n              |     |\n              |     |\n               -----\n",valeurD);
+printf("vous avez %d voulez-vous rejouer ?\nSi oui, tapez 1. Si non, tapez 0.\n",valeurTotalCarteJ);
+scanf("%d",&choixDeFinir);}
+
+
+if (valeurTotalCarteJ>21){
+
+       printf("Vous avez %d, vous avez donc depasse 21...\n",valeurTotalCarteJ);
+jetonsJoueur=jetonsJoueur-miseJoueur;
+
+    printf("C'est la fin de la partie. Vous avez perdu votre mise. Il vous reste %d jetons.\n",jetonsJoueur);
+}
+
+else{
+printf("Au tour du croupier maintenant.\n");
+ if (nombreParties % 3 == 0) {//si le nombre de partie est divisible par 3 on va truquer les de pour que le croupier ai plus de chance de gagner
+
+
+
+while (valeurTotalCarteC<17){
+    int valeurD = rand()%4+1;
+    valeurTotalCarteC=valeurTotalCarteC+valeurD;
+    if(valeurTotalCarteC>9){
+    printf("Le croupier a  ------\n              |      |\n              |      |\n              |  %d  |\n              |      |\n              |      |\n               ------\n",valeurTotalCarteC);}
+else printf("Le croupier a  -----\n              |     |\n              |     |\n              |  %d  |\n              |     |\n              |     |\n               -----\n",valeurTotalCarteC);}}
+
+ else{while (valeurTotalCarteC<=17)
+{
+   int valeurD= rand()%6+1;
+    valeurTotalCarteC=valeurTotalCarteC+valeurD;
+if(valeurTotalCarteC>9){
+    printf("Le croupier a  ------\n              |      |\n              |      |\n              |  %d  |\n              |      |\n              |      |\n               ------\n",valeurTotalCarteC);}
+else { printf("Le croupier a  -----\n              |     |\n              |     |\n              |  %d  |\n              |     |\n              |     |\n               -----\n",valeurTotalCarteC);}}
+
+ }
+
+if (valeurTotalCarteC>21){
+        printf("Le croupier a %d, il a donc depasse 21...\n",valeurTotalCarteC);
+  valeurTotalCarteC=0;
+   }
+
+
+if (valeurTotalCarteJ<valeurTotalCarteC){
+    jetonsJoueur=jetonsJoueur-miseJoueur;
+printf("Vous avez perdu... Il vous reste donc %d jetons.\n",jetonsJoueur);
+}
+
+else{
+    jetonsJoueur=jetonsJoueur+miseJoueur;
+   printf("Vous avez gagne ! Vous avez donc %d jetons.\n",jetonsJoueur);}
+
+
+
+printf("Voulez-vous refaire une partie ? Si oui, tapez 1. Si non, tapez 0.\n");
+scanf("%d",&NouvellePartie);}}
+return 0;}
